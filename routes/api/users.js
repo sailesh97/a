@@ -40,7 +40,7 @@ router.post('/register', (req, res) => {
 
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        if (err) throw err;
+                        if (err) { console.log(err); throw err; }
                         newUser.password = hash;
                         newUser.save()
                             .then(user => res.json(user))
@@ -96,7 +96,11 @@ router.post('/login', (req, res) => {
 // @desc    Return current user
 // @access  Private
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.json({ msg: 'Success' });
+    res.json({
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email
+    });
 });
 
 module.exports = router;
