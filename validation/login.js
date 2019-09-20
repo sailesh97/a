@@ -1,45 +1,24 @@
 const Validator = require('validator');
 const isEmpty = require('./is_empty');
 
-module.exports = function validateRegisterInput(data) {
+module.exports = function validateLoginInput(data) {
     let errors = {};
 
-    data.name = !isEmpty(data.name) ? data.name : '';
+    // To use Validator.isEmpty method all the parameters should be of string type.
+    // So to convert all parameters of all possible types that may be(null,empty object or anything other that string); we have to use this below block of lines.
     data.email = !isEmpty(data.email) ? data.email : '';
     data.password = !isEmpty(data.password) ? data.password : '';
-    data.password2 = !isEmpty(data.password2) ? data.password2 : '';
 
-
-    if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
-        errors.name = 'Name must be between 2 and 30 characters';
-    }
-
-    if (Validator.isEmpty(data.name)) {
-        errors.name = 'Name field is required';
+    if (!Validator.isEmail(data.email)) {
+        errors.email = 'Email is invalid';
     }
 
     if (Validator.isEmpty(data.email)) {
         errors.email = 'Email field is required';
     }
 
-    if (!Validator.isEmail(data.email)) {
-        errors.email = 'Email is invalid';
-    }
-
     if (Validator.isEmpty(data.password)) {
         errors.password = 'Password field is required';
-    }
-
-    if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-        errors.password = 'Password must be atleast 6 characters';
-    }
-
-    if (Validator.isEmpty(data.password2)) {
-        errors.password2 = 'Confirm Password field is required';
-    }
-
-    if (!Validator.equals(data.password, data.password2)) {
-        errors.password = 'Passwords must match';
     }
 
     return {

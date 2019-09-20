@@ -8,6 +8,8 @@ const passport = require('passport');
 
 // Load Input Validation
 const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
+
 
 // Load User model
 const User = require('../../models/User');
@@ -66,6 +68,15 @@ router.post('/register', (req, res) => {
 // @desc    Login User / Returning JWT Token
 // @access  Public
 router.post('/login', (req, res) => {
+    const { errors, isValid } = validateLoginInput(req.body);
+
+    //Check Validation
+    if (!isValid) {
+        return res.status(400).json(errors)
+    }
+    // The above if block ensures that error object we have from validateLoginInput is an empty object.So we can proceed with the following and if we will find any error from database we will push it to this empty error object.
+
+    //Summary: Validation part ends above and password is correct or not ;email is valid or not need to be checked.
     const email = req.body.email;
     const password = req.body.password;
 
@@ -74,7 +85,8 @@ router.post('/login', (req, res) => {
         .then(user => {
             // Check for user
             if (!user) {
-                return res.status(404).json({ email: 'User not found' });
+                errors.email = 'User not found';
+                return res.status(404).json(errors);
             }
 
             // Check Password
@@ -96,7 +108,8 @@ router.post('/login', (req, res) => {
 
                         // res.json({ msg: 'Success' });
                     } else {
-                        return res.status(400).json({ password: 'Password incorrect' });
+                        errors.password = 'Password Incorrect';
+                        return res.status(400).json(errors);
                     }
                 })
         });
