@@ -43,7 +43,7 @@ module.exports = function validateRegisterInput(data) {
     }
 
     if (!Validator.equals(data.password, data.password2)) {
-        errors.match = 'Passwords must match'; //if we will use errors.password2 here: even if we don't pass any value in Confirm Password field in our frontend , it will show 'Passwords must match" only.But the "Confirm Password field is required" message should be shown too.
+        errors.password2 = 'Passwords must match'; //if we will use errors.password2 here: even if we don't pass any value in Confirm Password field in our frontend , it will show 'Passwords must match" only.But the "Confirm Password field is required" message should be shown too.
     }
 
     return {
