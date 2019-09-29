@@ -18,7 +18,14 @@ class Dashboard extends Component {
 
         if (profile === null || loading) {
             dashboardContent = <Spinner />;
-        } else {
+        }
+        // if (loading) {
+        //     dashboardContent = <Spinner />;
+        // }
+        // else if (profile === null) {
+        //     dashboardContent = <Redirect to="/login" />
+        // }
+        else {
             // Check if logged in user has profile data
             if (Object.keys(profile).length > 0) {
                 dashboardContent = <h4>DISPLAY PROFILE</h4>

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE } from './types';
 
-// Get current profile
+// Get current profile - Linked to Dashboard page
 export const getCurrentProfile = () => dispatch => {
     dispatch(setProfileLoading());
     axios.get('/api/profile')
