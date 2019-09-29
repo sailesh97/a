@@ -272,9 +272,9 @@ router.delete('/education/:edu_id', passport.authenticate('jwt', { session: fals
 // @access  Private
 router.delete('/', passport.authenticate('jwt', { session: false }),
     (req, res) => {
-        Profile.findOneAndRemove({ user: req.user.id })
+        Profile.findOneAndRemove({ user: req.user.id }, { useFindAndModify: false })
             .then(() => {
-                User.findOneAndRemove({ _id: req.user.id })
+                User.findOneAndRemove({ _id: req.user.id }, { useFindAndModify: false })
                     .then(() => res.json({ success: true }))
             })
     });
