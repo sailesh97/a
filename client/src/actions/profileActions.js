@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER } from './types';
+import { GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER, GET_PROFILES } from './types';
 
 import setAuthToken from '../utils/setAuthToken';
 
@@ -17,6 +17,40 @@ export const getCurrentProfile = () => dispatch => {
             dispatch({
                 type: GET_PROFILE,
                 payload: {}
+            })
+        );
+}
+
+// Get profile by handle
+export const getProfileByHandle = (handle) => dispatch => {
+    dispatch(setProfileLoading());
+    axios.get(`/api/profile/handle/${handle}`)
+        .then(res => dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_PROFILE,
+                payload: null
+            })
+        );
+}
+
+// Get all profiles
+export const getProfiles = () => dispatch => {
+    dispatch(setProfileLoading());
+    axios.get('/api/profile/all')
+        .then(res => dispatch({
+            type: GET_PROFILES,
+            payload: res.data
+        })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_PROFILES,
+                payload: null
             })
         );
 }

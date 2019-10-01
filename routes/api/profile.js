@@ -189,6 +189,7 @@ router.post('/experience', passport.authenticate('jwt', { session: false }),
 
                 profile.save().then(profile => res.json(profile));
             })
+            .catch(err => console.log(err));
     });
 
 // @route   POST api/profile/education
@@ -221,6 +222,7 @@ router.post('/education', passport.authenticate('jwt', { session: false }),
 
                 profile.save().then(profile => res.json(profile));
             })
+            .catch(err => console.log(err));
     });
 
 // @route   DELETE api/profile/experience/:exp_id
