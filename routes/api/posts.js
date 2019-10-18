@@ -56,8 +56,26 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
         user: req.user.id // represents the user who created the post (basically id of the logged in user)
     });
 
-    newPost.save().then(post => res.json(post));
+    newPost.save().then(post => res.json(post))
 });
+
+// router.post('/', (req, res) => {
+//     const { errors, isValid } = validatePostInput(req.body);
+
+//     //Check Validation
+//     if (!isValid) {
+//         return res.status(400).json(errors)
+//     }
+
+//     const newPost = new Post({
+//         text: req.body.text,
+//         name: req.body.name,
+//         avatar: req.body.avatar,
+//         user: req.user.id // represents the user who created the post (basically id of the logged in user)
+//     });
+
+//     newPost.save().then(post => res.json(post))
+// });
 
 // @route   DELETE api/posts/:id  --> Obviously the post id
 // @desc    Delete post
